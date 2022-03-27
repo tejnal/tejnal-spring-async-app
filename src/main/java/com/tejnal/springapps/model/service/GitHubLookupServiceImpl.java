@@ -1,8 +1,11 @@
 package com.tejnal.springapps.model.service;
 
 
-import com.tejnal.springapps.model.User;
+import com.tejnal.springapps.mapper.IUserResponseToUserEntityMapper;
+import com.tejnal.springapps.model.UserResponse;
 import com.tejnal.springapps.exception.ExternalApiIntegrationException;
+import com.tejnal.springapps.repository.UserRepository;
+import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,17 +24,22 @@ public class GitHubLookupServiceImpl implements  GitHubLookupService{
 
     private static final Logger log = LoggerFactory.getLogger(GitHubLookupServiceImpl.class);
 
+    private IUserResponseToUserEntityMapper userResponseToOrderEntityMapper = Mappers.getMapper(IUserResponseToUserEntityMapper.class);
+
     private final  RestTemplate restTemplate;
     private String githubUrl;
+    private UserRepository userRepository;
     private static final String API_END_PATH = "users/";
     public GitHubLookupServiceImpl(RestTemplateBuilder restTemplateBuilder,
-                                   @Value("${github.apiEndPoint}") String githubUrl) {
+                                   @Value("${github.apiEndPoint}") String githubUrl,
+                                   UserRepository userRepository) {
         this.restTemplate = restTemplateBuilder.build();
         this.githubUrl = githubUrl;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public CompletableFuture<User> findByUser(String user)  throws InterruptedException{
+    public CompletableFuture<UserResponse> findByUser(String user)  throws InterruptedException{
         log.info("Looking up: {}", user );
         try {
         URI uri = UriComponentsBuilder.fromHttpUrl(githubUrl)
@@ -40,7 +48,10 @@ public class GitHubLookupServiceImpl implements  GitHubLookupService{
                 .encode()
                 .toUri();
 
-        User results =  restTemplate.getForObject(uri, User.class);
+        UserResponse results =  restTemplate.getForObject(uri, UserResponse.class);
+            var saveUser = userResponseToOrderEntityMapper.mapOrderResponseToOrderEntity(results);
+            userRepository.save(saveUser);
+
         Thread.sleep(1000);
         return CompletableFuture.completedFuture(results);
 

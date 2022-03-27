@@ -1,11 +1,9 @@
 package com.tejnal.springapps;
 
-import com.tejnal.springapps.model.User;
 import com.tejnal.springapps.model.service.GitHubLookupServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +11,9 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.CompletableFuture;
-
 @SpringBootApplication
 @EnableAsync
-public class TejnalSpringAsyncAppApplication implements CommandLineRunner {
+public class TejnalSpringAsyncAppApplication {
   private static final Logger log = LoggerFactory.getLogger(TejnalSpringAsyncAppApplication.class);
 
   @Autowired GitHubLookupServiceImpl gitHubLookupService;
@@ -37,16 +33,16 @@ public class TejnalSpringAsyncAppApplication implements CommandLineRunner {
     return executor;
   }
 
-  @Override
+/*  @Override
   public void run(String... args) throws Exception {
     long start = System.currentTimeMillis();
 
 
     // Kick of multiple, asynchronous lookups
-    CompletableFuture<User> test1 = gitHubLookupService.findByUser("PivotalSoftware");
-    CompletableFuture<User> test2 = gitHubLookupService.findByUser("CloudFoundry");
-    CompletableFuture<User> test3 = gitHubLookupService.findByUser("Spring-Projects");
-    CompletableFuture<User> test4 = gitHubLookupService.findByUser("tejnal");
+    CompletableFuture<UserResponse> test1 = gitHubLookupService.findByUser("PivotalSoftware");
+    CompletableFuture<UserResponse> test2 = gitHubLookupService.findByUser("CloudFoundry");
+    CompletableFuture<UserResponse> test3 = gitHubLookupService.findByUser("Spring-Projects");
+    CompletableFuture<UserResponse> test4 = gitHubLookupService.findByUser("tejnal");
 
     CompletableFuture.allOf(test1, test2, test3, test4).join();
 
@@ -56,5 +52,5 @@ public class TejnalSpringAsyncAppApplication implements CommandLineRunner {
 	  log.info("Task2 --> " + test2.get());
 	  log.info("Task3 --> " + test3.get());
 	  log.info("Task4 --> " + test4.get());
-  }
+  }*/
 }
