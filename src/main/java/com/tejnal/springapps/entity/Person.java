@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
-public class User {
+@Table(name = "person")
+public class Person {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,27 +17,29 @@ public class User {
   private int id;
 
   @Column
-  private Long user_id;
+  private Long personId;
   @Column
   private String name;
   @Column
   private String blog;
 
-  public User() {}
-
-  public User(Long user_id, String name, String blog) {
+  public Person() {
     super();
-    this.user_id = user_id;
+  }
+
+  public Person(Long personId, String name, String blog) {
+    super();
+    this.personId = personId;
     this.name = name;
     this.blog = blog;
   }
 
-  public Long getUser_id() {
-    return user_id;
+  public Long getPersonId() {
+    return personId;
   }
 
-  public void setUser_id(Long user_id) {
-    this.user_id = user_id;
+  public void setPersonId(Long personId) {
+    this.personId = personId;
   }
 
   public String getName() {
@@ -58,9 +60,9 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
+    return "Person{" +
             "id=" + id +
-            ", user_id=" + user_id +
+            ", personId=" + personId +
             ", name='" + name + '\'' +
             ", blog='" + blog + '\'' +
             '}';

@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  app:
+    image: tejnal-spring-async-app
+    build:
+      context: .
+    container_name: app
+    expose:
+      - 3001
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+
+  db:
+    image: postgres
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+
+

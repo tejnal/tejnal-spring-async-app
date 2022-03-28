@@ -11,6 +11,8 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.Executor;
+
 @SpringBootApplication
 @EnableAsync
 public class TejnalSpringAsyncAppApplication {
@@ -22,16 +24,6 @@ public class TejnalSpringAsyncAppApplication {
     SpringApplication.run(TejnalSpringAsyncAppApplication.class, args);
   }
 
-  @Bean("threadPoolTaskExecutor")
-  public TaskExecutor getAsyncTaskExecutor() {
-
-    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-    executor.setCorePoolSize(5);
-    executor.setMaxPoolSize(20);
-    executor.setWaitForTasksToCompleteOnShutdown(true);
-    executor.setThreadNamePrefix("Async-");
-    return executor;
-  }
 
 /*  @Override
   public void run(String... args) throws Exception {
@@ -39,10 +31,10 @@ public class TejnalSpringAsyncAppApplication {
 
 
     // Kick of multiple, asynchronous lookups
-    CompletableFuture<UserResponse> test1 = gitHubLookupService.findByUser("PivotalSoftware");
-    CompletableFuture<UserResponse> test2 = gitHubLookupService.findByUser("CloudFoundry");
-    CompletableFuture<UserResponse> test3 = gitHubLookupService.findByUser("Spring-Projects");
-    CompletableFuture<UserResponse> test4 = gitHubLookupService.findByUser("tejnal");
+    CompletableFuture<PersonResponse> test1 = gitHubLookupService.findByUser("PivotalSoftware");
+    CompletableFuture<PersonResponse> test2 = gitHubLookupService.findByUser("CloudFoundry");
+    CompletableFuture<PersonResponse> test3 = gitHubLookupService.findByUser("Spring-Projects");
+    CompletableFuture<PersonResponse> test4 = gitHubLookupService.findByUser("tejnal");
 
     CompletableFuture.allOf(test1, test2, test3, test4).join();
 

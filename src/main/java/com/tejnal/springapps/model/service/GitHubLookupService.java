@@ -1,11 +1,11 @@
 package com.tejnal.springapps.model.service;
 
-import com.tejnal.springapps.model.UserResponse;
+import com.tejnal.springapps.model.PersonResponse;
 
 import java.util.concurrent.CompletableFuture;
 
 
 public interface GitHubLookupService {
 
-    CompletableFuture<UserResponse> findByUser(String user) throws InterruptedException;
+    CompletableFuture<PersonResponse> findByUser(String user) throws InterruptedException;
 }

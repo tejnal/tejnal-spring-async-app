@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 
 @JsonPropertyOrder({"id", "name", "blog"})
-public class UserResponse {
+public class PersonResponse {
 
     @NotNull
     @JsonProperty("id")
-    private Long userId;
+    private Long personId;
     @NotNull
     @JsonProperty("name")
     private String name;
@@ -20,13 +21,13 @@ public class UserResponse {
     @JsonProperty("blog")
     private String blog;
 
-    public UserResponse() {
+    public PersonResponse() {
       super();
     }
 
-    public UserResponse(Long userId, String name, String blog) {
+    public PersonResponse(Long personId, String name, String blog) {
         super();
-        this.userId = userId;
+        this.personId = personId;
         this.name = name;
         this.blog = blog;
     }
@@ -47,22 +48,35 @@ public class UserResponse {
         this.blog = blog;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPersonId(Long personId) {
+        this.personId = personId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PersonResponse)) return false;
+        PersonResponse that = (PersonResponse) o;
+        return Objects.equals(getPersonId(), that.getPersonId()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getBlog(), that.getBlog());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPersonId(), getName(), getBlog());
     }
 
     @Override
     public String toString() {
-        return "UserResponse{" +
-                "userId='" + userId + '\'' +
+        return "PersonResponse{" +
+                "personId=" + personId +
                 ", name='" + name + '\'' +
                 ", blog='" + blog + '\'' +
                 '}';
     }
-
-
 }
